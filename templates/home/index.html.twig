@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+    <!-- Navigation catégories -->
+    <div class="category-nav mb-5">
+        {% if categories is not empty %}
+            <div class="d-flex justify-content-center">
+                <a href="#all" class="category-btn active">Tous</a>
+                {% for category in categories %}
+                    <a href="#{{ category.name|lower }}" 
+                       class="category-btn">
+                        {{ category.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                Aucune catégorie créée pour le moment.
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Liste livres -->
+    {% if books is empty %}
+        <div class="alert alert-warning text-center">
+            Aucun livre disponible. 
+            {% if not is_granted('ROLE_ADMIN') %}
+                <p>Connectez-vous en tant qu'administrateur pour ajouter des livres.</p>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="row">
+            {% for book in books %}
+                {# ... Votre carte de livre #}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
