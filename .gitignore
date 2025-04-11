@@ -1,8 +1,12 @@
-
 ###> symfony/framework-bundle ###
+/.env
+/.env.*
+!.env.example  # Exemple autorisé (sans secrets réels)
 /.env.local
 /.env.local.php
-/.env.*.local
+/.env.dev
+/.env.test
+/.env.prod
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
@@ -13,6 +17,7 @@
 ###> phpunit/phpunit ###
 /phpunit.xml
 .phpunit.result.cache
+/coverage/  # Dossiers de rapports de tests
 ###< phpunit/phpunit ###
 
 ###> symfony/phpunit-bridge ###
@@ -24,3 +29,41 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> IDE & OS ###
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+###< IDE & OS ###
+
+###> Logs & Cache ###
+/logs/
+/*.log
+/cache/
+###< Logs & Cache ###
+
+###> Composer ###
+/composer.lock  # À ignorer pour les librairies, à versionner pour les apps
+/composer.phar
+###< Composer ###
+
+###> Frontend ###
+/webpack-assets.json
+/assets/bundles/
+/npm-debug.log
+/yarn-error.log
+/.babelrc
+/.eslintrc.js
+/.stylelintrc.js
+###< Frontend ###
+
+###> Docker ###
+docker-compose.override.yml  # Contient souvent des configs locales
+/.dockerignore
+###< Docker ###
+
+###> Symfony Flex ###
+/.symfony.lock
+###< Symfony Flex ###
