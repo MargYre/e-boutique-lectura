@@ -124,12 +124,17 @@
                                 Catégories
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ path('homepage') }}">Tous les livres</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{{ path('homepage') }}?category=roman">Romans</a></li>
-                                <li><a class="dropdown-item" href="{{ path('homepage') }}?category=bd">BD</a></li>
-                                <li><a class="dropdown-item" href="{{ path('homepage') }}?category=scolaire">Livres Scolaires</a></li>
-                            </ul>
+                            <li><a class="dropdown-item" href="{{ path('homepage') }}">Tous les livres</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            {% for category in categories %}
+                                <li>
+                            <a class="dropdown-item {{ currentCategory == category.slug ? 'active' }}" 
+                            href="{{ path('homepage') }}?category={{ category.slug }}">
+                                {{ category.name }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
                         </li>
                     </ul>
                     <div class="d-flex">
