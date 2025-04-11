@@ -1,40 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-<div class="container">
-    <!-- Navigation catégories -->
-    <div class="category-nav mb-5">
-        {% if categories is not empty %}
-            <div class="d-flex justify-content-center">
-                <a href="#all" class="category-btn active">Tous</a>
-                {% for category in categories %}
-                    <a href="#{{ category.name|lower }}" 
-                       class="category-btn">
-                        {{ category.name }}
-                    </a>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div class="alert alert-info">
-                Aucune catégorie créée pour le moment.
-            </div>
-        {% endif %}
-    </div>
+{% block title %}Accueil - Ma Librairie{% endblock %}
 
-    <!-- Liste livres -->
-    {% if books is empty %}
-        <div class="alert alert-warning text-center">
-            Aucun livre disponible. 
-            {% if not is_granted('ROLE_ADMIN') %}
-                <p>Connectez-vous en tant qu'administrateur pour ajouter des livres.</p>
-            {% endif %}
-        </div>
-    {% else %}
-        <div class="row">
-            {% for book in books %}
-                {# ... Votre carte de livre #}
-            {% endfor %}
-        </div>
-    {% endif %}
+{% block body %}
+<div class="row mb-4">
+    <div class="col">
+        <h1 class="display-5 fw-bold">Nos derniers livres</h1>
+        <p class="lead text-secondary mb-4">Découvrez notre sélection</p>
+    </div>
 </div>
+
+{% if books is empty %}
+    <div class="alert alert-info">
+        Aucun livre disponible pour le moment.
+    </div>
+{% else %}
+    <div class="row g-4">
+        {% for book in books %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.title }}</h5>
+                        <p class="card-text text-muted">Par {{ book.author }}</p>
+                        <p class="card-text fw-bold">{{ book.price|format_currency('EUR') }}</p>
+                        <p class="card-text small">{{ book.description|u.truncate(100, '...') }}</p>
+                        <div class="d-flex justify-content-between">
+                            <a href="#" class="btn btn-outline-primary">Détails</a>
+                            <a href="#" class="btn btn-primary">
+                                <i class="bi bi-cart-plus"></i> Ajouter
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 {% endblock %}
