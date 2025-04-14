@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\Book;
 use App\Repository\BookRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +15,7 @@ class BookController extends AbstractController
     public function home(
         BookRepository $bookRepo,
         CategoryRepository $categoryRepo,
-        Request $request // <-- Ajoutez ceci
+        Request $request
     ): Response {
     $categorySlug = $request->query->get('category');
     
@@ -25,7 +26,18 @@ class BookController extends AbstractController
     return $this->render('home/index.html.twig', [
         'books' => $books,
         'categories' => $categoryRepo->findAll(),
-        'currentCategory' => $categorySlug // Pour le highlight actif
+        'currentCategory' => $categorySlug
     ]);
+    }
+    #[Route('/book/{id}', name: 'book_show')]
+    public function show(Book $book, CategoryRepository $categoryRepository): Response
+    {
+        $categories = $categoryRepository->findAll();
+
+        return $this->render('book/show.html.twig', [
+            'book' => $book,
+            'categories' => $categories,
+            'currentCategory' => null,
+        ]);
     }
 }
