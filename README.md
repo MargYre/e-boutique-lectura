@@ -1,21 +1,57 @@
-# 📚 Lectura – Online Bookstore for Books, Comics & Manga
+# 📚 Lectura – Symfony E-Boutique
 
-**Lectura** is a web-based e-commerce platform built with Symfony, offering a way to browse, select, and order books, comics, and manga.  
-Developed as part of a training project, this boutique focuses on the core user experience of an online bookstore, without payment integration.
+Boutique en ligne développée avec **Symfony** dans le cadre d’un projet de formation. Elle permet de consulter, ajouter et commander des livres, BD et mangas.  
+⚠️ Paiement non intégré.
 
 ---
 
-## 🎯 Key Features
+## ⚙️ Prérequis
+- PHP 8.1+
+- Composer
+- MySQL 8.0+
+- Symfony CLI
 
-- Browse products by **category**: books, comics, manga
-- View detailed **product pages** with description, price, and cover image
-- Add products to a **shopping cart** stored in session
-- Update product **quantities** directly in the cart
-- See detailed **order summary**: per-item totals, delivery fees, and overall price
-- User **authentication**: registration, login, profile & address management
-- Finalize and review the order before validation
-- **Back office**: Admin panel to manage the product catalog
+---
 
-> 🧾 **Note:** No actual payment system is implemented in this version.
+## 🚀 Installation rapide
+
+```bash
+git clone [votre-repo]
+cd e-boutique-lectura
+composer install
+php bin/console doctrine:database:create
+mysql -u [user] -p e_boutique_lectura < assets/sql/initial_data.sql
+composer require twig/intl-extra twig/string-extra
+```
+
+---
+
+## ▶️ Lancer le projet
+
+```bash
+symfony server:start
+```
+
+---
+
+## 🔑 Accès
+
+- Front : http://localhost:8000  
+- Démo : `plop@plop.fr` / `plop` 
+
+---
+
+## 📦 Fonctionnalités
+
+- Navigation par **catégorie**
+- Fiches produit détaillées
+- Connexion & déconnexion
+
+## A venir...
+- Inscription
+- **Panier** avec gestion des quantités
+- Récapitulatif de commande
+- Authentification & gestion du profil
+- Interface **admin** pour gérer le catalogue
 
 ---
