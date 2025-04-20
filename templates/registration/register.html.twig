@@ -10,7 +10,7 @@
                     <div class="card-header bg-primary text-white">Créer un compte</div>
 
                     <div class="card-body">
-                        {{ form_start(registrationForm) }}
+                        {{ form_start(registrationForm, {'attr': {'data-turbo': 'false'}}) }}
                             <div class="mb-3">
                                 {{ form_label(registrationForm.email) }}
                                 {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
