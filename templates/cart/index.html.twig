@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Panier - Lectura{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <div class="card p-4 mb-4">
+            <h1 class="mb-4 fs-2">Mon Panier</h1>
+
+            {% if cart is empty %}
+                <div class="alert alert-info p-4 text-center">
+                    <p class="mb-3">Votre panier est actuellement vide</p>
+                    <a href="{{ path('homepage') }}" class="btn btn-outline-primary">
+                        Parcourir notre catalogue
+                    </a>
+                </div>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Livre</th>
+                                <th>Prix unitaire</th>
+                                <th>Quantité</th>
+                                <th>Total</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in cart %}
+                                <tr>
+                                    <td class="align-middle">
+                                        <strong>{{ item.book.title }}</strong>
+                                    </td>
+                                    <td class="align-middle">{{ item.book.price|format_currency('EUR') }}</td>
+                                    <td class="align-middle">
+                                        <form method="post" action="{{ path('cart_update', {'id': item.book.id}) }}" class="d-flex align-items-center">
+                                            <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="form-control me-2" style="width: 70px;">
+                                            <button type="submit" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-arrow-repeat"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td class="align-middle fw-bold">{{ (item.book.price * item.quantity)|format_currency('EUR') }}</td>
+                                    <td class="align-middle">
+                                        <a href="{{ path('cart_remove', {'id': item.book.id}) }}" class="btn btn-outline-danger btn-sm">
+                                            <i class="bi bi-trash"></i> Retirer
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr class="table-light">
+                                <th colspan="3" class="text-end">Total</th>
+                                <th colspan="2" class="fs-5">{{ total|format_currency('EUR') }}</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-4">
+                    <a href="{{ path('homepage') }}" class="btn btn-outline-primary">
+                        <i class="bi bi-arrow-left"></i> Continuer mes achats
+                    </a>
+                    <a href="#" class="btn btn-primary px-4 py-2">
+                        Passer la commande <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        .table th {
+            color: var(--color-accent);
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: var(--color-bg-main);
+        }
+        
+        .btn-outline-danger {
+            color: #dc3545;
+            border-color: #dc3545;
+        }
+        
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .card {
+            border-radius: 0.5rem;
+        }
+    </style>
+{% endblock %}

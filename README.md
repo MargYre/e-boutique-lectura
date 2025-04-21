@@ -47,6 +47,7 @@ symfony server:start
 - Fiches produit détaillées
 - Connexion & déconnexion
 - Inscription
+- Panier
 
 ## A venir...
 - **Panier** avec gestion des quantités

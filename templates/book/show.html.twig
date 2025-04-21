@@ -27,7 +27,11 @@
                             <p><strong>Stock disponible :</strong> {{ book.stock }}</p>
                         </div>
                     </div>
-                    
+                    <div class="col-md-6">
+                        <a href="{{ path('cart_add', {'id': book.id}) }}" class="btn btn-primary">
+                            Ajouter au panier
+                        </a>
+                    </div>
                     <div class="mt-4">
                         <a href="{{ path('homepage') }}" class="btn btn-outline-secondary">
                             Retour à la liste
