@@ -46,12 +46,12 @@ symfony server:start
 - Navigation par **catégorie**
 - Fiches produit détaillées
 - Connexion & déconnexion
+- Inscription
 
 ## A venir...
-- Inscription
 - **Panier** avec gestion des quantités
 - Récapitulatif de commande
-- Authentification & gestion du profil
+- Gestion du profil
 - Interface **admin** pour gérer le catalogue
 
 ---

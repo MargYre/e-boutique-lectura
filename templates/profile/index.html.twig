@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="h4 mb-0">Mon Profil</h2>
+                    </div>
+                    
+                    <div class="card-body">
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="bi bi-check-circle-fill me-2"></i>{{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                            </div>
+                        {% endfor %}
+                        
+                        {{ form_start(profileForm) }}
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    {{ form_label(profileForm.email) }}
+                                    {{ form_widget(profileForm.email, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(profileForm.email, {'attr': {'class': 'text-danger'}}) }}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    {{ form_label(profileForm.firstname) }}
+                                    {{ form_widget(profileForm.firstname, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(profileForm.firstname, {'attr': {'class': 'text-danger'}}) }}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    {{ form_label(profileForm.lastname) }}
+                                    {{ form_widget(profileForm.lastname, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(profileForm.lastname, {'attr': {'class': 'text-danger'}}) }}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    {{ form_label(profileForm.address) }}
+                                    {{ form_widget(profileForm.address, {'attr': {'class': 'form-control', 'rows': 3}}) }}
+                                    {{ form_errors(profileForm.address, {'attr': {'class': 'text-danger'}}) }}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    {{ form_label(profileForm.postalCode) }}
+                                    {{ form_widget(profileForm.postalCode, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(profileForm.postalCode, {'attr': {'class': 'text-danger'}}) }}
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    {{ form_label(profileForm.city) }}
+                                    {{ form_widget(profileForm.city, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(profileForm.city, {'attr': {'class': 'text-danger'}}) }}
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    {{ form_label(profileForm.country) }}
+                                    {{ form_widget(profileForm.country, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(profileForm.country, {'attr': {'class': 'text-danger'}}) }}
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    {{ form_label(profileForm.phoneNumber) }}
+                                    {{ form_widget(profileForm.phoneNumber, {'attr': {'class': 'form-control'}}) }}
+                                    {{ form_errors(profileForm.phoneNumber, {'attr': {'class': 'text-danger'}}) }}
+                                </div>
+                            </div>
+                            
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save me-1"></i> Mettre à jour
+                                </button>
+                            </div>
+                        {{ form_end(profileForm) }}
+                    </div>
+                </div>
+                
+                <div class="mt-4 text-center">
+                    <a href="{{ path('homepage') }}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i> Retour à l'accueil
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
