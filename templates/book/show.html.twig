@@ -1,45 +1,154 @@
-{# templates/show.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ book.title }} - Détails{% endblock %}
+{% block title %}{{ book.title }} - Lectura{% endblock %}
 
 {% block body %}
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-8 mx-auto">
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="card-title">{{ book.title }}</h1>
-                    <p class="text-muted">Par {{ book.author }}</p>
-                    <p><strong>Catégorie :</strong> {{ book.category.name }}</p>
-                    <hr>
-                    
-                    <div class="mb-4">
-                        <h4>Description</h4>
-                        <p>{{ book.description }}</p>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p><strong>Prix :</strong> {{ book.price|format_currency('EUR') }}</p>
+        <div class="col-lg-10 mx-auto">
+            <div class="card border-0 shadow-sm book-detail-card">
+                <div class="card-body p-0">
+                    <div class="row g-0">
+                        <!-- Couverture du livre -->
+                        <div class="col-md-4 detail-cover-container">
+                            <div class="detail-cover-placeholder d-flex flex-column justify-content-center align-items-center">
+                                <i class="bi bi-book fs-1 mb-2"></i>
+                                <p class="text-center small text-muted mb-0">Image à venir</p>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <p><strong>Stock disponible :</strong> {{ book.stock }}</p>
+                        
+                        <!-- Détails du livre -->
+                        <div class="col-md-8">
+                            <div class="p-4 p-md-5">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <span class="badge bg-light text-secondary mb-2">{{ book.category.name }}</span>
+                                        <h1 class="book-title mb-1">{{ book.title }}</h1>
+                                        <p class="text-muted">Par <span class="author-name">{{ book.author }}</span></p>
+                                    </div>
+                                    <span class="price-tag fs-4 fw-bold">{{ book.price|format_currency('EUR') }}</span>
+                                </div>
+                                
+                                <div class="stock-info mb-4">
+                                    {% if book.stock > 10 %}
+                                        <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i> En stock ({{ book.stock }})</span>
+                                    {% elseif book.stock > 0 %}
+                                        <span class="badge bg-warning text-dark"><i class="bi bi-exclamation-circle me-1"></i> Stock limité ({{ book.stock }})</span>
+                                    {% else %}
+                                        <span class="badge bg-danger"><i class="bi bi-x-circle me-1"></i> Indisponible</span>
+                                    {% endif %}
+                                </div>
+                                
+                                <hr class="my-4">
+                                
+                                <div class="book-description mb-4">
+                                    <h4 class="section-title">Description</h4>
+                                    <p>{{ book.description }}</p>
+                                </div>
+                                
+                                <div class="action-buttons mt-5">
+                                    <div class="row">
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            {% if book.stock > 0 %}
+                                                <a href="{{ path('cart_add', {'id': book.id}) }}" class="btn btn-primary w-100">
+                                                    <i class="bi bi-cart-plus me-2"></i>Ajouter au panier
+                                                </a>
+                                            {% else %}
+                                                <button class="btn btn-secondary w-100" disabled>
+                                                    <i class="bi bi-x-circle me-2"></i>Indisponible
+                                                </button>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <a href="{{ path('homepage') }}" class="btn btn-outline-primary w-100">
+                                                <i class="bi bi-arrow-left me-2"></i>Continuer mes achats
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <a href="{{ path('cart_add', {'id': book.id}) }}" class="btn btn-primary">
-                            Ajouter au panier
-                        </a>
-                    </div>
-                    <div class="mt-4">
-                        <a href="{{ path('homepage') }}" class="btn btn-outline-secondary">
-                            Retour à la liste
-                        </a>
+                </div>
+            </div>
+            
+            <!-- Suggestions -->
+            <div class="related-books mt-5">
+                <h4 class="mb-4">Vous pourriez aussi aimer</h4>
+                <div class="card border-0 bg-transparent">
+                    <div class="card-body p-0">
+                        <p class="text-muted text-center py-4">
+                            <i class="bi bi-info-circle me-2"></i>
+                            Les suggestions seront disponibles prochainement
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        /* Styles spécifiques à la page de détail */
+        .book-detail-card .book-title {
+            color: var(--color-accent);
+            font-size: 1.8rem;
+        }
+        
+        .book-detail-card .author-name {
+            color: var(--color-text-secondary);
+            font-style: italic;
+        }
+        
+        .book-detail-card .price-tag {
+            color: var(--color-accent);
+        }
+        
+        .detail-cover-container {
+            background-color: var(--color-bg-main);
+            border-right: 1px solid var(--color-border);
+        }
+        
+        .detail-cover-placeholder {
+            height: 100%;
+            min-height: 300px;
+            color: var(--color-text-secondary);
+        }
+        
+        .book-detail-card .stock-info .badge {
+            padding: 0.5em 1em;
+            font-weight: normal;
+            border-radius: 30px;
+        }
+        
+        .book-detail-card .section-title {
+            color: var(--color-accent);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .book-detail-card .book-description p {
+            line-height: 1.7;
+        }
+        
+        .book-detail-card .action-buttons {
+            border-top: 1px solid var(--color-border);
+            padding-top: 1.5rem;
+        }
+        
+        .book-detail-card .related-books {
+            color: var(--color-accent);
+        }
+        
+        @media (max-width: 767.98px) {
+            .detail-cover-placeholder {
+                min-height: 200px;
+                padding: 2rem 0;
+            }
+        }
+    </style>
 {% endblock %}
