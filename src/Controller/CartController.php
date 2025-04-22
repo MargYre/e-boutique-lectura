@@ -34,8 +34,12 @@ class CartController extends AbstractController
                 $subtotal += $book->getPrice() * $item['quantity'];
             }
         }
-
-        $deliveryOption = $request->request->get('delivery_option', 'home');
+        if ($request->isMethod('POST')) {
+            $deliveryOption = $request->request->get('delivery_option', 'home');
+            $session->set('delivery_option', $deliveryOption);
+            return $this->redirectToRoute('cart_show');
+        }
+        $deliveryOption = $session->get('delivery_option', 'home');
         $deliveryCost = $deliveryOption === 'relay' ? 3.50 : 5.90;
         $total = $subtotal + $deliveryCost;
 
