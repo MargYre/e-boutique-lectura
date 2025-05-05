@@ -9,7 +9,7 @@ use App\Repository\UserRepository;
 
 final class AdminUserController extends AbstractController
 {
-    #[Route('/admin/user', name: 'app_admin_user')]
+    #[Route('/admin/user', name: 'admin_user')]
     public function index(UserRepository $userRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');

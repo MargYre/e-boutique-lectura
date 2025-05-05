@@ -1,0 +1,42 @@
+{{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-8">
+            {{ form_row(form.title, {
+                label: 'Titre',
+                attr: {'class': 'form-control'}
+            }) }}
+            {{ form_row(form.author, {
+                label: 'Auteur',
+                attr: {'class': 'form-control'}
+            }) }}
+            {{ form_row(form.description, {
+                label: 'Description courte',
+                attr: {'class': 'form-control', 'rows': 3}
+            }) }}
+            {{ form_row(form.longDescription, {
+                label: 'Description détaillée',
+                attr: {'class': 'form-control', 'rows': 5}
+            }) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_row(form.price, {
+                label: 'Prix (€)',
+                attr: {'class': 'form-control'}
+            }) }}
+            {{ form_row(form.stock, {
+                label: 'Quantité en stock',
+                attr: {'class': 'form-control'}
+            }) }}
+            {{ form_row(form.category, {
+                label: 'Catégorie',
+                attr: {'class': 'form-select'}
+            }) }}
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> {{ button_label|default('Enregistrer') }}
+        </button>
+    </div>
+{{ form_end(form) }}

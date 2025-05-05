@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration - Éditer {{ book.title }}{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Éditer "{{ book.title }}"</h1>
+
+    {{ include('admin_book/_form.html.twig') }}
+
+    <a href="{{ path('admin_book_index') }}" class="btn btn-outline-secondary mt-3">
+        <i class="bi bi-arrow-left"></i> Retour à la liste
+    </a>
+</div>
+{% endblock %}
