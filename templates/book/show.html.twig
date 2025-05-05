@@ -10,10 +10,20 @@
                 <div class="card-body p-0">
                     <div class="row g-0">
                         <!-- Couverture du livre -->
-                        <div class="col-md-4 detail-cover-container">
-                            <div class="detail-cover-placeholder d-flex flex-column justify-content-center align-items-center">
-                                <i class="bi bi-book fs-1 mb-2"></i>
-                                <p class="text-center small text-muted mb-0">Image à venir</p>
+                        <!-- Couverture du livre - Version corrigée -->
+                        <div class="col-md-4 p-3 d-flex align-items-center justify-content-center bg-light">
+                            <div class="w-100">
+                                {% if book.imageName %}
+                                    <img src="{{ asset('uploads/' ~ book.imageName) }}" 
+                                         alt="{{ book.title }}" 
+                                         class="img-fluid rounded shadow w-100 h-100"
+                                         style="object-fit: contain; object-position: center;">
+                                {% else %}
+                                    <div class="d-flex flex-column justify-content-center align-items-center h-100 w-100">
+                                        <i class="bi bi-book fs-1 mb-2 text-muted"></i>
+                                        <p class="text-center small text-muted mb-0">Image à venir</p>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                         
@@ -94,9 +104,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         /* Styles spécifiques à la page de détail */
-        .book-detail-card .book-title {
-            color: var(--color-accent);
-            font-size: 1.8rem;
+        .book-detail-card .col-md-4 {
+            min-height: 400px;
+            border-right: 1px solid var(--color-border);
+        }
+        
+        @media (max-width: 767.98px) {
+            .book-detail-card .col-md-4 {
+                min-height: 300px;
+                border-right: none;
+                border-bottom: 1px solid var(--color-border);
+            }
         }
         
         .book-detail-card .author-name {

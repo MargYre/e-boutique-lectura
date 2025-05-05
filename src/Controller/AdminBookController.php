@@ -26,49 +26,75 @@ final class AdminBookController extends AbstractController
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+{
+    $book = new Book();
+    $form = $this->createForm(BookType::class, $book);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $imageFile = $form->get('imageFile')->getData();
         
-        $book = new Book();
-        $form = $this->createForm(BookType::class, $book);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($book);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Le livre a été créé avec succès.');
-            return $this->redirectToRoute('admin_book_index');
+        if ($imageFile) {
+            $newFilename = uniqid().'.'.$imageFile->guessExtension();
+            
+            // Déplacez le fichier dans le dossier public/uploads
+            $imageFile->move(
+                $this->getParameter('kernel.project_dir').'/public/uploads',
+                $newFilename
+            );
+            
+            // Enregistrez le nom du fichier dans l'entité
+            $book->setImageName($newFilename);
         }
 
-        return $this->render('admin_book/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        $entityManager->persist($book);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('admin_book_index');
     }
+
+    return $this->render('admin_book/new.html.twig', [
+        'book' => $book,
+        'form' => $form->createView(),
+    ]);
+}
 
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(
-        Request $request, 
-        Book $book, 
-        EntityManagerInterface $entityManager
-    ): Response {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+    public function edit(Request $request, Book $book, EntityManagerInterface $entityManager): Response
+{
+    $form = $this->createForm(BookType::class, $book);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $imageFile = $form->get('imageFile')->getData();
         
-        $form = $this->createForm(BookType::class, $book);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Le livre a été mis à jour.');
-            return $this->redirectToRoute('admin_book_index');
+        if ($imageFile) {
+            // Supprimez l'ancienne image si elle existe
+            if ($book->getImageName()) {
+                $oldImage = $this->getParameter('kernel.project_dir').'/public/uploads/'.$book->getImageName();
+                if (file_exists($oldImage)) {
+                    unlink($oldImage);
+                }
+            }
+            
+            $newFilename = uniqid().'.'.$imageFile->guessExtension();
+            $imageFile->move(
+                $this->getParameter('kernel.project_dir').'/public/uploads',
+                $newFilename
+            );
+            $book->setImageName($newFilename);
         }
 
-        return $this->render('admin_book/edit.html.twig', [
-            'book' => $book,
-            'form' => $form->createView(),
-        ]);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('admin_book_index');
     }
+
+    return $this->render('admin_book/edit.html.twig', [
+        'book' => $book,
+        'form' => $form->createView(),
+    ]);
+}
 
     #[Route('/{id}', name: 'delete', methods: ['POST'])]
     public function delete(

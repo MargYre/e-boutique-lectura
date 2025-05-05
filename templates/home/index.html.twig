@@ -18,7 +18,7 @@
             <p class="mb-3">Aucun livre disponible pour le moment.</p>
             <a href="{{ path('homepage') }}" class="btn btn-outline-primary">
                 Rafraîchir la page
-            </a>
+            </a>zz
         </div>
     {% else %}
         <div class="row g-4">
@@ -26,10 +26,17 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="card h-100 border-0 book-card-list">
                         <!-- Couverture du livre -->
-                        <div class="list-cover-container">
-                            <div class="list-cover-placeholder d-flex justify-content-center align-items-center">
-                                <i class="bi bi-book fs-3"></i>
-                            </div>
+                        <div class="detail-cover-placeholder d-flex flex-column justify-content-center align-items-center">
+                            {% if book.imageName %}
+                                <img src="{{ asset('uploads/' ~ book.imageName) }}" 
+                                    alt="{{ book.title }}" 
+                                    class="img-fluid rounded shadow">
+                            {% else %}
+                                <div class="detail-cover-placeholder d-flex flex-column justify-content-center align-items-center">
+                                    <i class="bi bi-book fs-1 mb-2"></i>
+                                    <p class="text-center small text-muted mb-0">Image à venir</p>
+                                </div>
+                            {% endif %}
                         </div>
                         
                         <div class="card-body p-4">
